@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: '3'
+
+vars:
+  GREETING: Hello, world!
+
+tasks:
+  expo-start:
+    desc: Run the Expo Server
+    cmds:
+      - docker compose up -d
+      - sleep 2
+      - docker compose exec -ti app sh
+    silent: true
+
+  expo-stop:
+    desc: Stop the Expo Server
+    cmds:
+      - docker compose down
+    silent: true
