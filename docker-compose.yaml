@@ -1,6 +1,7 @@
 services:
   app:
     image: node:26-alpine
+    user: '1000'
     working_dir: /app
     volumes:
       - .:/app
