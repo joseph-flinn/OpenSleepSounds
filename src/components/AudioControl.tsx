@@ -28,21 +28,12 @@ export const AudioControl = () => {
     configureAudioSession();
   }, []);
 
-  const handlePlay = () => {
-    if (status && !status.isPlaying) {
+  const handleToggle = () => {
+    if (status?.isPlaying) {
+      player.pause();
+    } else {
       player.play();
     }
-  };
-
-  const handlePause = () => {
-    if (status && status.isPlaying) {
-      player.pause();
-    }
-  };
-
-  const handleStop = () => {
-    player.pause();
-    player.seekTo(0);
   };
 
   return (
@@ -51,9 +42,13 @@ export const AudioControl = () => {
         {status?.isPlaying ? 'Playing' : 'Paused'}
       </Text>
       <View style={styles.buttons}>
-        <Button title="Play" onPress={handlePlay} />
-        <Button title="Pause" onPress={handlePause} />
-        <Button title="Stop" onPress={handleStop} />
+        <Button
+          title={status?.isPlaying ? 'Pause' : 'Play'}
+          onPress={handleToggle}
+          accessibilityLabel={status?.isPlaying ? 'Pause current track' : 'Play current track'}
+          accessibilityRole="button"
+          accessibilityState={{ checked: status?.isPlaying }}
+        />
       </View>
     </View>
   );
@@ -69,7 +64,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttons: {
-    flexDirection: 'row',
     gap: 10,
   },
 });

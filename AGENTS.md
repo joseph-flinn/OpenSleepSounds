@@ -4,4 +4,5 @@ Read the exact versioned docs at https://docs.expo.dev/versions/v56.0.0/ before 
 
 ## Development 
 
-When excuting `/opsx:apply`, use a subagent for each of the defined tasks in a tasks.md file.
+- When excuting `/opsx:apply`, use a subagent for each of the defined tasks in a tasks.md file.
+- After running `/opsx:apply`, run `git add .` 
