@@ -1,15 +1,36 @@
 import React from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
+//import { useTheme } from './ThemeContext';
+import { useThemedStyles } from '../hooks/useThemedStyles';
 
 //const AUDIO_FILE = require('../../assets/audio/river_trimmed.aac');
-const AUDIO_FILE = require('../../assets/audio/river.wav');
+const AUDIO_FILE = require('../../assets/audio/smooth-brown-noise-10s.wav');
+
+const createStyles = (theme) =>
+  StyleSheet.create({
+    container: {
+      padding: 20,
+      alignItems: 'center',
+      backgroundColor: theme.colors.card,
+    },
+    status: {
+      fontSize: 18,
+      color: theme.colors.text,
+      marginBottom: 20,
+    },
+    buttons: {
+      gap: 10,
+    },
+  });
 
 /**
  * AudioControl - Displays audio playback controls
  * Centered using flexbox centering in App.tsx container
  */
 export const AudioControl = () => {
+  //const { theme } = useTheme();
+  const styles = useThemedStyles(createStyles);
   const player = useAudioPlayer(AUDIO_FILE);
   const status = useAudioPlayerStatus(player);
 
@@ -68,17 +89,3 @@ export const AudioControl = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    alignItems: 'center',
-  },
-  status: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  buttons: {
-    gap: 10,
-  },
-});

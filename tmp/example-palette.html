@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Midnight Green & Tan Preview</title>
+    <style>
+        :root {
+            --bg-body: #03110d;
+            --bg-card: #032017;
+            --bg-card-border: rgba(216, 181, 137, 0.1);
+            --bg-card-border-light: rgba(218, 181, 137, 0.2);
+            --bg-tab-active: rgba(234, 210, 172, 0.08);
+            --bg-tab-hover: rgba(216, 181, 137, 0.05);
+            --color-text-primary: #c3b597;
+            --color-text-secondary: #EAD2AC;
+            --color-text-muted: #D8B589;
+            --shadow-elevation: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #03110d;
+            --bg-card: #032017;
+            --bg-card-border: rgba(216, 181, 137, 0.1);
+            --bg-card-border-light: rgba(218, 181, 137, 0.2);
+            --bg-tab-active: rgba(234, 210, 172, 0.08);
+            --bg-tab-hover: rgba(216, 181, 137, 0.05);
+            --color-text-primary: #c3b597;
+            --color-text-secondary: #EAD2AC;
+            --color-text-muted: #D8B589;
+            --shadow-elevation: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="light"] {
+            --bg-body: #f5f3ee;
+            --bg-card: #ffffff;
+            --bg-card-border: rgba(216, 181, 137, 0.2);
+            --bg-card-border-light: rgba(218, 181, 137, 0.3);
+            --bg-tab-active: rgba(234, 210, 172, 0.15);
+            --bg-tab-hover: rgba(216, 181, 137, 0.08);
+            --color-text-primary: #2c2c2c;
+            --color-text-secondary: #4a4a4a;
+            --color-text-muted: #7a7a7a;
+            --shadow-elevation: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-elevation);
+            border: 1px solid var(--bg-card-border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 10px;
+            border-bottom: 2px solid var(--bg-card-border-light);
+            padding-bottom: 8px;
+            margin-bottom: 24px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.2s ease;
+            color: var(--color-text-muted);
+            opacity: 0.6;
+        }
+
+        .tab-btn:hover {
+            opacity: 0.9;
+            background-color: var(--bg-tab-hover);
+        }
+
+        .tab-btn.active {
+            color: var(--color-text-secondary);
+            opacity: 1;
+            background-color: var(--bg-tab-active);
+        }
+
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+        
+        h1 {
+            color: var(--color-text-primary);
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            color: var(--color-text-primary);
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        p {
+            color: var(--color-text-primary);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            letter-spacing: 0.02em;
+            margin: 0;
+        }
+
+        a {
+            color: var(--color-text-muted);
+            opacity: 0.6;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            letter-spacing: 0.02em;
+            margin: 0;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--color-text-muted);
+            opacity: 0.9;
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .theme-toggle {
+            background-color: var(--bg-card);
+            color: var(--color-text-secondary);
+            border: 1px solid var(--bg-card-border);
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: var(--shadow-elevation);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            opacity: 0.8;
+        }
+
+        .color-picker-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .color-picker-card {
+            background-color: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-elevation);
+            border: 1px solid var(--bg-card-border);
+            max-width: 200px;
+        }
+
+        .color-picker-card h3 {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            margin: 0 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .color-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .color-input-wrapper label {
+            color: var(--color-text-muted);
+            font-size: 0.8rem;
+            flex: 1;
+        }
+
+        .color-input-wrapper input[type="color"] {
+            width: 40px;
+            height: 40px;
+            border: none;
+            padding: 2px;
+            cursor: pointer;
+            background: none;
+        }
+
+        .color-input-wrapper input[type="text"] {
+            width: 80px;
+            padding: 8px;
+            background-color: var(--bg-body);
+            border: 1px solid var(--bg-card-border);
+            border-radius: 4px;
+            color: var(--color-text-primary);
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+  <body style="display: flex; flex-direction: column;">
+    <script>
+        function switchTab(event, tabId) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            const panels = document.querySelectorAll('.tab-panel');
+            panels.forEach(panel => panel.classList.remove('active'));
+
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            updateThemeUI(newTheme);
+        }
+
+        function updateThemeUI(theme) {
+            const icon = document.getElementById('theme-icon');
+            const label = document.getElementById('theme-label');
+            
+            if (theme === 'light') {
+                icon.innerHTML = '☀️';
+                label.innerHTML = 'Light';
+            } else {
+                icon.innerHTML = '🌙';
+                label.innerHTML = 'Dark';
+            }
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeUI(theme);
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(savedTheme);
+
+        document.querySelector('.theme-toggle').addEventListener('click', () => {
+            const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('theme', newTheme);
+        });
+
+        const colorInputs = document.querySelectorAll('.hex-input');
+        colorInputs.forEach(input => {
+            const colorPicker = input.previousElementSibling;
+            colorPicker.addEventListener('input', (e) => {
+                const hex = e.target.value;
+                input.value = hex;
+                updateRootVariable(input.dataset.var, hex);
+            });
+
+            input.addEventListener('input', (e) => {
+                const hex = e.target.value;
+                colorPicker.value = hex;
+                updateRootVariable(input.dataset.var, hex);
+            });
+        });
+
+        function updateRootVariable(variableName, value) {
+            document.documentElement.style.setProperty(variableName, value);
+            
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                if (variableName === '--bg-body') {
+                    document.documentElement.style.setProperty('--bg-body', value);
+                } else if (variableName === '--bg-card') {
+                    document.documentElement.style.setProperty('--bg-card', value);
+                }
+            }
+        }
+    </script>
+
+    <div style="text-align: center; margin-bottom: 40px;">
+      <h1 style="margin-bottom: 16px;">Deep Green Palette</h1>
+      <p style="color: var(--color-text-primary); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Test your color combinations against the deep green background.</p>
+    </div>
+
+    <div class="theme-switcher">
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span>
+            <span id="theme-label">Dark</span>
+        </button>
+    </div>
+
+      <div class="color-picker-container">
+        <div class="color-picker-card">
+            <h3>Background Colors</h3>
+            
+            <div class="color-input-wrapper">
+                <label>Body</label>
+                <input type="color" id="body-color" value="#00170f">
+                <input type="text" class="hex-input" value="#00170f" data-var="--bg-body">
+            </div>
+            
+            <div class="color-input-wrapper">
+                <label>Card</label>
+                <input type="color" id="card-color" value="#002418">
+                <input type="text" class="hex-input" value="#002418" data-var="--bg-card">
+            </div>
+
+            <h3 style="margin-top: 15px;">Text Colors</h3>
+            
+            <div class="color-input-wrapper">
+                <label>Primary</label>
+                <input type="color" id="primary-color" value="#F4E2BB">
+                <input type="text" class="hex-input" value="#F4E2BB" data-var="--color-text-primary">
+            </div>
+            
+            <div class="color-input-wrapper">
+                <label>Secondary</label>
+                <input type="color" id="secondary-color" value="#EAD2AC">
+                <input type="text" class="hex-input" value="#EAD2AC" data-var="--color-text-secondary">
+            </div>
+            
+            <div class="color-input-wrapper">
+                <label>Muted</label>
+                <input type="color" id="muted-color" value="#D8B589">
+                <input type="text" class="hex-input" value="#D8B589" data-var="--color-text-muted">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="tabs-nav">
+            <button class="tab-btn active" onclick="switchTab(event, 'parchment')">Parchment</button>
+            <button class="tab-btn" onclick="switchTab(event, 'khaki')">Khaki</button>
+            <button class="tab-btn" onclick="switchTab(event, 'camel')">Camel</button>
+        </div>
+
+        <div id="parchment" style="margin: 10px;">
+            <h2>#F4E2BB — Radiant Readability</h2>
+            <p>Against this darker green background (#002418), Soft Parchment stands out beautifully. The increased contrast makes the text pop cleanly without feeling harsh like a stark white would.</p>
+        </div>
+
+        <div id="khaki" style="margin: 10px;">
+            <h2>#EAD2AC — Editorial Khaki</h2>
+            <p>This shade maintains its rich, warm undertones. It acts as an excellent, high-end focal color for headers and primary navigation states.</p>
+        </div>
+
+        <div id="camel" style="margin: 10px;">
+            <h2>#D8B589 — Deep Camel Accent</h2>
+            <p>Now that the background is darker, this Camel tone becomes an ideal utility color. It works perfectly for less prominent text, borders, or inactive tab elements. It also works for links. <a href="">This example</a> has text around it to show how the color is different.</p>
+        </div>
+    </div>
+
+
+</body>
+</html>
