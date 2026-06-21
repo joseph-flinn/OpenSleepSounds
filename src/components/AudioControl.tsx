@@ -1,10 +1,8 @@
 import React from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
-//import { useTheme } from './ThemeContext';
 import { useThemedStyles } from '../hooks/useThemedStyles';
 
-//const AUDIO_FILE = require('../../assets/audio/river_trimmed.aac');
 const AUDIO_FILE = require('../../assets/audio/smooth-brown-noise-10s.wav');
 
 const createStyles = (theme) =>
@@ -29,7 +27,6 @@ const createStyles = (theme) =>
  * Centered using flexbox centering in App.tsx container
  */
 export const AudioControl = () => {
-  //const { theme } = useTheme();
   const styles = useThemedStyles(createStyles);
   const player = useAudioPlayer(AUDIO_FILE);
   const status = useAudioPlayerStatus(player);
