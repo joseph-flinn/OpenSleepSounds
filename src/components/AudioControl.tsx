@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Button, Text, StyleSheet } from 'react-native';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
 
-const AUDIO_FILE = require('../../assets/audio/river_trimmed.aac');
+//const AUDIO_FILE = require('../../assets/audio/river_trimmed.aac');
+const AUDIO_FILE = require('../../assets/audio/river.wav');
 
 /**
  * AudioControl - Displays audio playback controls
@@ -13,12 +14,16 @@ export const AudioControl = () => {
   const status = useAudioPlayerStatus(player);
 
   React.useEffect(() => {
+    player.loop = true;
+  }, [player]);
+
+  React.useEffect(() => {
     const configureAudioSession = async () => {
       try {
         await setAudioModeAsync({
-          playsInSilentModeIOS: true,
-          staysActiveInBackground: true,
-          shouldDuckAndroid: false,
+          playsInSilentMode: true,
+          shouldPlayInBackground: true,
+          interruptionMode: 'doNotMix',
         });
       } catch (error) {
         console.error('Error configuring audio session:', error);
@@ -28,26 +33,36 @@ export const AudioControl = () => {
     configureAudioSession();
   }, []);
 
+  const handlePlay = () => {
+    player.seekTo(0);
+    player.setActiveForLockScreen(true, {
+      title: "Creek",
+      artist: "JF",
+      albumTitle: "Nature"
+    });
+    player.play();
+  };
+
   const handleToggle = () => {
-    if (status?.isPlaying) {
+    if (status.playing) {
       player.pause();
     } else {
-      player.play();
+      handlePlay();
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.status}>
-        {status?.isPlaying ? 'Playing' : 'Paused'}
+        {status.playing ? 'Playing' : 'Paused'}
       </Text>
       <View style={styles.buttons}>
         <Button
-          title={status?.isPlaying ? 'Pause' : 'Play'}
+          title={status.playing ? 'Pause' : 'Play'}
           onPress={handleToggle}
-          accessibilityLabel={status?.isPlaying ? 'Pause current track' : 'Play current track'}
+          accessibilityLabel={status.playing ? 'Pause current track' : 'Play current track'}
           accessibilityRole="button"
-          accessibilityState={{ checked: status?.isPlaying }}
+          accessibilityState={{ checked: status.playing }}
         />
       </View>
     </View>
