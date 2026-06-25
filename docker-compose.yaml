@@ -1,5 +1,5 @@
 services:
-  app:
+  dev:
     image: node:26-alpine
     user: '1000'
     working_dir: /app
@@ -7,6 +7,16 @@ services:
       - .:/app
     ports:
       - "8081:8081"
+    stdin_open: true
+    tty: true
+    command: sh
+
+  builder:
+    image: open-sleep-sounds-builder:v0.21
+    user: '1000'
+    working_dir: /app
+    volumes:
+      - .:/app
     stdin_open: true
     tty: true
     command: sh

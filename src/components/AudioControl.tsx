@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Button, Text, StyleSheet } from 'react-native';
+import { View, Button, Text, StyleSheet, ViewStyle } from 'react-native';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
 import { useThemedStyles } from '../hooks/useThemedStyles';
+import { PlayIcon, PauseIcon } from './icons';
 
-const AUDIO_FILE = require('../../assets/audio/smooth-brown-noise-10s.wav');
+//const AUDIO_FILE = require('../../assets/audio/smooth-brown-noise-10s.wav');
+const AUDIO_FILE = require('../../assets/audio/pink-noise-10s.wav');
 
 const createStyles = (theme) =>
   StyleSheet.create({
@@ -20,6 +22,10 @@ const createStyles = (theme) =>
     buttons: {
       gap: 10,
     },
+    iconButton: {
+      width: '25%',
+      alignItems: 'center',
+    } as ViewStyle,
   });
 
 /**
@@ -76,12 +82,17 @@ export const AudioControl = () => {
       </Text>
       <View style={styles.buttons}>
         <Button
-          title={status.playing ? 'Pause' : 'Play'}
+          title="Press"
           onPress={handleToggle}
-          accessibilityLabel={status.playing ? 'Pause current track' : 'Play current track'}
+          accessibilityLabel={status.playing ? 'Pause track' : 'Play track'}
           accessibilityRole="button"
           accessibilityState={{ checked: status.playing }}
-        />
+          accessibilityValue={{ text: status.playing ? 'Playing' : 'Paused' }}
+        >
+          <View style={styles.iconButton}>
+            {status.playing ? <PauseIcon /> : <PlayIcon />}
+          </View>
+        </Button>
       </View>
     </View>
   );
