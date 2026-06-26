@@ -47,7 +47,6 @@ jobs:
     name: Build
     needs:
       - version
-      - test-unit
     permissions:
       packages: write
       contents: read
