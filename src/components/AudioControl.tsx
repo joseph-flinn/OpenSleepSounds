@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Pressable, Button, Text, StyleSheet, ViewStyle } from 'react-native';
+import { View, Pressable, Text, StyleSheet, ViewStyle } from 'react-native';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
