@@ -38,7 +38,7 @@ jobs:
     name: Get Next Version
     needs:
       - pr
-    uses: ./.github/workflows/_version.yml
+    uses: ./.github/workflows/_version.yaml
     with:
       pull-request-number: ${{ needs.pr.outputs.id }}
 
@@ -50,7 +50,7 @@ jobs:
     permissions:
       packages: write
       contents: read
-    uses: ./.github/workflows/_build.yml
+    uses: ./.github/workflows/_build.yaml
     with: 
       version: ${{ needs.version.outputs.version }}
 
@@ -64,6 +64,6 @@ jobs:
     permissions:
       contents: write
       packages: write
-    uses: ./.github/workflows/_release.yml
+    uses: ./.github/workflows/_release.yaml
     with:
       version: ${{ needs.version.outputs.version }}
