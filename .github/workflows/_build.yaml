@@ -1,0 +1,53 @@
+---
+name: _build
+run-name: Build ${{ inputs.version }}
+
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        type: string
+        required: true
+
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    container:
+      image: reactnativecommunity/react-native-android:latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Save version
+        run: |
+          cat package.json | jq '. + {"version": "${{ inputs.version }}"}' > tmpVersion.json
+          mv tmpVersion.json version.json
+
+          cat version.json
+
+      - name: Prebuild
+        run: npx expo prebuild --platform android
+
+      - name: Build APK
+        run: |
+          cd android
+          ./gradlew assembleRelease
+          mv android/app/build/outputs/apk/release/app-release.apk ./open-sleep-sounds-${{ inputs.version }}.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: open-sleep-sounds-${{ inputs.version }}.apk
+          path: ./open-sleep-sounds-${{ inputs.version }}.apk

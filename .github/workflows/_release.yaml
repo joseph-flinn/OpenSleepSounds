@@ -1,0 +1,50 @@
+---
+name: _release
+run-name: Release ${{ inputs.version }}
+
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        type: string
+        required: true
+
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9  # v3.5.3
+        with:
+          fetch-depth: 0
+
+      - name: Get Run Artifact
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c  #v8.0.1
+        with:
+          name: open-sleep-sounds-${{ inputs.version }}.apk
+
+      - name: Create Tag
+        run: |
+          git config --local user.email "<>"
+          git config --local user.name "DevOps Bot"
+
+          git tag v${{ inputs.version }}
+          git push origin v${{ inputs.version }}
+
+      - name: Create release
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd  # v1.21.0
+        with:
+          commit: ${{ github.sha }}
+          tag: "v${{ inputs.version }}"
+          name: "Version ${{ inputs.version }}"
+          body: "Releasing ${{ inputs.version }}"
+          generateReleaseNotes: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
+          artifacts: "open-sleep-sounds-${{ inputs.version }}.apk"
