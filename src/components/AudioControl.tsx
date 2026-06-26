@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Pressable, Button, Text, StyleSheet, ViewStyle } from 'react-native';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useThemedStyles } from '../hooks/useThemedStyles';
 import { useTheme } from '../ThemeContext';
@@ -32,6 +33,7 @@ const createStyles = (theme) =>
 export const AudioControl = () => {
   const { theme } = useTheme(); // Only to set icon color
   const styles = useThemedStyles(createStyles);
+  const insets = useSafeAreaInsets();
   const player = useAudioPlayer(AUDIO_FILE);
   const status = useAudioPlayerStatus(player);
 
@@ -75,6 +77,26 @@ export const AudioControl = () => {
 
   return (
     <View style={styles.container}>
+      <View
+        style={{
+          position: 'absolute',
+          top: insets.top,
+          left: 0,
+          right: 0,
+          alignItems: 'center',
+          padding: 10,
+        }}
+      >
+        <Text
+          style={{
+            color: theme.colors.text,
+            fontSize: 24,
+            fontWeight: 'bold',
+          }}
+        >
+          OpenSleepSounds
+        </Text>
+      </View>
       <View style={styles.buttons}>
         <IconButton
           onPress={handleToggle}
