@@ -1,8 +1,12 @@
 import React from 'react';
-import { View, Button, Text, StyleSheet, ViewStyle } from 'react-native';
+import { View, Pressable, Text, StyleSheet, ViewStyle } from 'react-native';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
+import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { useThemedStyles } from '../hooks/useThemedStyles';
-import { PlayIcon, PauseIcon } from './icons';
+import { useTheme } from '../ThemeContext';
+import { IconButton } from './IconButton';
 
 //const AUDIO_FILE = require('../../assets/audio/smooth-brown-noise-10s.wav');
 const AUDIO_FILE = require('../../assets/audio/pink-noise-10s.wav');
@@ -11,21 +15,15 @@ const createStyles = (theme) =>
   StyleSheet.create({
     container: {
       padding: 20,
+      width: '95%',
+      height: '95%',
       alignItems: 'center',
+      justifyContent: 'center',
       backgroundColor: theme.colors.card,
-    },
-    status: {
-      fontSize: 18,
-      color: theme.colors.text,
-      marginBottom: 20,
     },
     buttons: {
       gap: 10,
-    },
-    iconButton: {
-      width: '25%',
-      alignItems: 'center',
-    } as ViewStyle,
+    }
   });
 
 /**
@@ -33,7 +31,9 @@ const createStyles = (theme) =>
  * Centered using flexbox centering in App.tsx container
  */
 export const AudioControl = () => {
+  const { theme } = useTheme(); // Only to set icon color
   const styles = useThemedStyles(createStyles);
+  const insets = useSafeAreaInsets();
   const player = useAudioPlayer(AUDIO_FILE);
   const status = useAudioPlayerStatus(player);
 
@@ -77,22 +77,38 @@ export const AudioControl = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.status}>
-        {status.playing ? 'Playing' : 'Paused'}
-      </Text>
-      <View style={styles.buttons}>
-        <Button
-          title="Press"
-          onPress={handleToggle}
-          accessibilityLabel={status.playing ? 'Pause track' : 'Play track'}
-          accessibilityRole="button"
-          accessibilityState={{ checked: status.playing }}
-          accessibilityValue={{ text: status.playing ? 'Playing' : 'Paused' }}
+      <View
+        style={{
+          position: 'absolute',
+          top: insets.top,
+          left: 0,
+          right: 0,
+          alignItems: 'center',
+          padding: 10,
+        }}
+      >
+        <Text
+          style={{
+            color: theme.colors.text,
+            fontSize: 24,
+            fontWeight: 'bold',
+          }}
         >
-          <View style={styles.iconButton}>
-            {status.playing ? <PauseIcon /> : <PlayIcon />}
-          </View>
-        </Button>
+          OpenSleepSounds
+        </Text>
+      </View>
+      <View style={styles.buttons}>
+        <IconButton
+          onPress={handleToggle}
+          size={128}
+          icon={
+            <Ionicons 
+              name={status.playing ? "pause-circle-outline" : "play-circle-outline"} 
+              size={128} 
+              color={theme.colors.text}
+            />
+          }
+        />
       </View>
     </View>
   );

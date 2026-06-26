@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { AudioControl } from './src/components/AudioControl';
 import { ThemeProvider, useTheme } from './src/ThemeContext';
 import { useThemedStyles } from './src/hooks/useThemedStyles';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const createStyles = (theme) =>
   StyleSheet.create({
@@ -29,8 +30,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <AppContent />
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }
