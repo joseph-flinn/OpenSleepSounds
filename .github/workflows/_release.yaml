@@ -42,7 +42,7 @@ jobs:
         with:
           commit: ${{ github.sha }}
           tag: "v${{ inputs.version }}"
-          name: "Version ${{ inputs.version }}"
+          name: "${{ inputs.version }}"
           body: "Releasing ${{ inputs.version }}"
           generateReleaseNotes: true
           token: ${{ secrets.GITHUB_TOKEN }}
