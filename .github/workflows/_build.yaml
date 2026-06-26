@@ -33,9 +33,9 @@ jobs:
       - name: Save version
         run: |
           cat package.json | jq '. + {"version": "${{ inputs.version }}"}' > tmpVersion.json
-          mv tmpVersion.json version.json
-
-          cat version.json
+          mv tmpVersion.json package.json
+          cat app.json | jq '. + {"version": "${{ inputs.version }}"}' > tmpVersion.json
+          mv tmpVersion.json app.json
 
       - name: Prebuild
         run: npx expo prebuild --platform android
