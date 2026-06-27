@@ -32,11 +32,11 @@ jobs:
 
       - name: Save version
         run: |
-          cat package.json | jq '. + {"version": "${{ inputs.version }}"}' > tmpVersion.json
+          cat package.json | jq '.version = "${{ inputs.version }}"' > tmpVersion.json
           mv tmpVersion.json package.json
           echo "===== package.json ====="
           cat package.json
-          cat app.json | jq '. + {"version": "${{ inputs.version }}"}' > tmpVersion.json
+          cat app.json | jq '.expo.version = "${{ inputs.version }}"' > tmpVersion.json
           mv tmpVersion.json app.json
           echo "===== app.json ====="
           cat app.json
