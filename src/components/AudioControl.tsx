@@ -7,6 +7,7 @@ import { useThemedStyles } from '../hooks/useThemedStyles';
 import { useTheme } from '../ThemeContext';
 import { IconButton } from './IconButton';
 import { PlayIcon, PauseIcon } from './AudioIcons';
+import { AppNameLogo } from './AppNameLogo';
 
 //const AUDIO_FILE = require('../../assets/audio/smooth-brown-noise-10s.wav');
 const AUDIO_FILE = require('../../assets/audio/pink-noise-10s.wav');
@@ -87,28 +88,23 @@ export const AudioControl = () => {
           padding: 10,
         }}
       >
-        <Text
-          style={{
-            color: theme.colors.text,
-            fontSize: 24,
-            fontWeight: 'bold',
-          }}
-        >
-          OpenSleepSounds
-        </Text>
+        <AppNameLogo
+          width={1000}
+          color={theme.colors.text}
+        />
       </View>
       <View style={styles.buttons}>
         <IconButton
           onPress={handleToggle}
-          size={128}
+          size={200}
           icon={ status.playing ? (
             <PauseIcon
-              size={128}
+              size={200}
               color={theme.colors.text}
             />
           ) : (
             <PlayIcon
-              size={128}
+              size={200}
               color={theme.colors.text}
             />
           )}
