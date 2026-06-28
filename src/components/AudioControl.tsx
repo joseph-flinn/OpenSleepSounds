@@ -5,8 +5,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useThemedStyles } from '../hooks/useThemedStyles';
 import { useTheme } from '../ThemeContext';
-import playIcon from '../../assets/play-icon-500.svg';
-import pauseIcon from '../../assets/pause-icon-500.svg';
+import { IconButton } from './IconButton';
+import { PlayIcon, PauseIcon } from './AudioIcons';
 
 //const AUDIO_FILE = require('../../assets/audio/smooth-brown-noise-10s.wav');
 const AUDIO_FILE = require('../../assets/audio/pink-noise-10s.wav');
@@ -98,19 +98,21 @@ export const AudioControl = () => {
         </Text>
       </View>
       <View style={styles.buttons}>
-        {status.playing ? (
-          <pauseIcon
-            width={128}
-            height={128}
-            fill={theme.colors.text}
-          />
-        ) : (
-          <playIcon
-            width={128}
-            height={128}
-            fill={theme.colors.text}
-          />
-        )}
+        <IconButton
+          onPress={handleToggle}
+          size={128}
+          icon={ status.playing ? (
+            <PauseIcon
+              size={128}
+              color={theme.colors.text}
+            />
+          ) : (
+            <PlayIcon
+              size={128}
+              color={theme.colors.text}
+            />
+          )}
+        />
       </View>
     </View>
   );
