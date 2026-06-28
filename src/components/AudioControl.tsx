@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Pressable, Text, StyleSheet, ViewStyle } from 'react-native';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
-import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useThemedStyles } from '../hooks/useThemedStyles';
 import { useTheme } from '../ThemeContext';
 import { IconButton } from './IconButton';
+import { SVGIcon } from './SVGIcon';
+import playIcon from '../../assets/play-icon-500.svg';
+import pauseIcon from '../../assets/pause-icon-500.svg';
 
 //const AUDIO_FILE = require('../../assets/audio/smooth-brown-noise-10s.wav');
 const AUDIO_FILE = require('../../assets/audio/pink-noise-10s.wav');
@@ -102,9 +104,9 @@ export const AudioControl = () => {
           onPress={handleToggle}
           size={128}
           icon={
-            <Ionicons 
-              name={status.playing ? "pause-circle-outline" : "play-circle-outline"} 
-              size={128} 
+            <SVGIcon
+              source={status.playing ? pauseIcon : playIcon}
+              size={128}
               color={theme.colors.text}
             />
           }
