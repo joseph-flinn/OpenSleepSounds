@@ -5,8 +5,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useThemedStyles } from '../hooks/useThemedStyles';
 import { useTheme } from '../ThemeContext';
-import { IconButton } from './IconButton';
-import { SVGIcon } from './SVGIcon';
 import playIcon from '../../assets/play-icon-500.svg';
 import pauseIcon from '../../assets/pause-icon-500.svg';
 
@@ -100,17 +98,19 @@ export const AudioControl = () => {
         </Text>
       </View>
       <View style={styles.buttons}>
-        <IconButton
-          onPress={handleToggle}
-          size={128}
-          icon={
-            <SVGIcon
-              source={status.playing ? pauseIcon : playIcon}
-              size={128}
-              color={theme.colors.text}
-            />
-          }
-        />
+        {status.playing ? (
+          <pauseIcon
+            width={128}
+            height={128}
+            fill={theme.colors.text}
+          />
+        ) : (
+          <playIcon
+            width={128}
+            height={128}
+            fill={theme.colors.text}
+          />
+        )}
       </View>
     </View>
   );
