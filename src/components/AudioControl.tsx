@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Pressable, Text, StyleSheet, ViewStyle } from 'react-native';
 import { useAudioPlayer, useAudioPlayerStatus, setAudioModeAsync } from 'expo-audio';
-import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useThemedStyles } from '../hooks/useThemedStyles';
 import { useTheme } from '../ThemeContext';
 import { IconButton } from './IconButton';
+import { PlayIcon, PauseIcon } from './AudioIcons';
+import { AppNameLogo } from './AppNameLogo';
 
 //const AUDIO_FILE = require('../../assets/audio/smooth-brown-noise-10s.wav');
 const AUDIO_FILE = require('../../assets/audio/pink-noise-10s.wav');
@@ -87,27 +88,26 @@ export const AudioControl = () => {
           padding: 10,
         }}
       >
-        <Text
-          style={{
-            color: theme.colors.text,
-            fontSize: 24,
-            fontWeight: 'bold',
-          }}
-        >
-          OpenSleepSounds
-        </Text>
+        <AppNameLogo
+          width={1000}
+          color={theme.colors.text}
+        />
       </View>
       <View style={styles.buttons}>
         <IconButton
           onPress={handleToggle}
-          size={128}
-          icon={
-            <Ionicons 
-              name={status.playing ? "pause-circle-outline" : "play-circle-outline"} 
-              size={128} 
+          size={200}
+          icon={ status.playing ? (
+            <PauseIcon
+              size={200}
               color={theme.colors.text}
             />
-          }
+          ) : (
+            <PlayIcon
+              size={200}
+              color={theme.colors.text}
+            />
+          )}
         />
       </View>
     </View>
